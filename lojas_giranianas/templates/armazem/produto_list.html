@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| Listagem de produtos
+{% endblock %}
+
+{% block conteudo %}
+    <h3>Produtos</h3>
+
+    {% for produto in object_list %}
+        <h5>{{ produto.nome }}</h5>
+        <p>{{ produto.descricao|truncatewords:10 }}</p>
+        <p><a href="{% url armazem:ver_produto produto.slug %}">Veja mais detalhes...</a></p>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">&lt; Anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ paginator.num_pages }}.
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Próxima &gt;</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

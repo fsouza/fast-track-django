@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| Contato
+{% endblock %}
+
+{% block conteudo %}
+    <h3>Contato</h3>
+    <p>Preencha o formulário abaixo para entrar em contato conosco:</p>
+
+    <form action="{% url contato %}" method="post" accept-charset="utf-8">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="Enviar" class="formbutton" /></p>
+    </form>
+{% endblock %}

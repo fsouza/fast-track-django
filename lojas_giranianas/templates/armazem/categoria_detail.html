@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| Subcategorias da categoria {{ categoria.nome }}
+{% endblock %}
+
+{% block conteudo %}
+    <h3>Subcategorias da categoria {{ categoria.nome }}</h3>
+    <hr /><br />
+    <div>
+        {% for subcategoria in categoria.subcategorias.all %}
+            <p>
+                <strong>{{ subcategoria.nome }}</strong><br />
+                <a href="{% url armazem:listar_produtos_por_categoria slug_categoria=subcategoria.slug %}">Produtos</a> | <a href="{% url armazem:ver_categoria slug=subcategoria.slug %}">Subcategorias</a>
+            </p>
+        {% empty %}
+            Esta categoria não possui nenhuma subcategoria.
+        {% endfor %}
+    </div>
+{% endblock %}

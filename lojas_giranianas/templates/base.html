@@ -1,0 +1,119 @@
+{% url newsletter:cadastrar_newsletter as url_cadastro_news %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <title>Lojas Giranianas {% block titulo %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ MEDIA_URL }}hotel.css" type="text/css" media="screen" charset="utf-8"/>
+        <script src="{{ MEDIA_URL }}jquery-1.4.4.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" language="javascript" charset="utf-8">
+        //<![CDATA[
+            jQuery.ready(function () {
+                {% block jquery %}
+                {% endblock %}
+            });
+        //]]>
+        </script>
+        <script type="text/javascript" language="javascript" charset="utf-8">
+        //<![CDATA[
+            function cadastrar_newsletter() {
+                var campo_email = jQuery("#id_email");
+                var email = campo_email.val();
+                var url = "{{ url_cadastro_news }}";
+                jQuery.post(url,
+                        {
+                            email : email
+                        },
+                        function (data) {
+                            if (data.status === "Ok") {
+                                campo_email.empty();
+                            }
+                            jQuery("#retorno_newsletter").html(data.mensagem);
+                        }, 'json');
+            }
+        //]]>
+        </script>
+    </head>
+    <body id="">
+        <div class="header">
+            <div class="outernav">
+                <div class="nav">
+                    <div class="innernav">
+                        <ul>
+                            <!-- MENU -->
+                            <li><a href="{% url home %}">Página inicial</a></li>
+                            <li><a href="{% url armazem:listar_categorias %}">Categorias</a></li>
+                            <li><a href="{% url armazem:listar_produtos %}">Produtos</a></li>
+                            <li><a href="{% url contato %}">Contato</a></li>
+                            <li><a href="{% url admin:index %}">Administração</a></li>
+                            <!-- END MENU -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clear"></div>
+
+            <div class="title">
+                <div class="innertitle">
+
+                    <!-- TITLE -->
+                    <h1><a href="#">Lojas Giranianas</a></h1>
+                    <h2>O melhor você encontra aqui! :D</h2>
+                    <!-- END TITLE -->
+
+                </div>
+            </div>
+        </div>
+        <div id="wrap">
+            <div class="pagewrapper">
+                <div class="innerpagewrapper">
+                    <div class="page">
+                        <div class="content">
+
+                            {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+
+                            {% block conteudo %}
+                            {% endblock %}
+
+                        </div>
+
+                        <div class="sidebar">
+
+                            <h4>Buscar</h4>
+                            <form action="#" method="get" class="searchform">
+                                <p>
+                                <input type="text" id="searchq" name="q" />
+                                <input type="submit" class="formbutton" value="Buscar" />
+                                </p>
+                            </form>
+
+                            <h4>Newsletter</h4>
+                            <form action="{{ url_cadastro_news }}" onsubmit="return false;" method="post" accept-charset="utf-8">
+                                {% csrf_token %}
+                                {{ newsletter_form.as_p }}
+                                <p id="retorno_newsletter"></p>
+                                <p><input type="submit" class="formbutton" value="Cadastrar" onclick="cadastrar_newsletter();" /></p>
+                            </form>
+                            <!-- SIDEBAR -->
+                            {% block barra_lateral %}
+                            {% endblock %}
+
+                        </div>
+
+                        <div class="footer">
+                            <p><a href="http://validator.w3.org/check/referer" title="valid XHTML">XHTML</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer" title="valid CSS">CSS</a> &nbsp;&nbsp; &copy; YourWebsiteName. Design: <a href="http://www.spyka.net">spyka webmaster</a> | <a href="http://www.justfreetemplates.com">Free Web Templates</a></p> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

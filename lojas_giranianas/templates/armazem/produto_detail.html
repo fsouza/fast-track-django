@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| Detalhes do produto {{ produto.nome }}
+{% endblock %}
+
+{% block conteudo %}
+    <h3>{{ produto.nome }}</h3>
+    <p>{{ produto.descricao }}</p>
+    <p><strong>Data de cadastro:</strong> {{ produto.data_cadastro }}<br />
+    <strong>Data da última modificação:</strong> {{ produto.data_cadastro }}<br />
+    <a href="{% url galeria:fotos_produto slug=produto.slug %}">Veja fotos desse produto</a></p> 
+{% endblock %}

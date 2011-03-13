@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| Galeria de fotos do produto {{ produto.nome }}
+{% endblock %}
+
+{% block conteudo %}
+    <h3>Galeria de fotos do produto {{ produto.nome }}</h3>
+
+    <p><a href="{% url armazem:ver_produto slug=produto.slug %}">Voltar para página do produto</a></p>
+
+    <ul class="galeria">
+        {% for foto in produto.fotos.all %}
+            <li><a href="{% url galeria:ver_foto slug_produto=produto.slug slug=foto.slug %}" title="{{ foto.legenda }}"><img src="{{ MEDIA_URL }}{{ foto.thumb.name }}" alt="{{ foto.legenda }}" title="{{ foto.legenda }}" /></a></li>
+        {% empty %}
+            Nenhuma foto para este produto =/
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+| {{ imagem.legenda }}
+{% endblock %}
+
+{% block conteudo %}
+    <h3>{{ imagem.legenda }}</h3>
+
+    <p><img src="{{ MEDIA_URL }}{{ imagem.original.name }}" alt="{{ imagem.legenda }}" title="{{ imagem.legenda }}" /></p>
+
+    <div class="links">
+        <a href="{% url galeria:fotos_produto slug=imagem.produto.slug %}">Voltar para galeria</a> |
+        <a href="{% url armazem:ver_produto slug=imagem.produto.slug %}">Voltar para página do produto</a>
+    </div>
+{% endblock %}

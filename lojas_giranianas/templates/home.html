@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block titulo %}| Página inicial{% endblock %}
+
+{% block conteudo %}
+    <h3>Seja bem-vindo ao nosso site!</h3>
+    <p>Compre à vontade ;)</p>
+{% endblock %}
+
+{% block barra_lateral %}
+    <h4>Últimos comentários</h4>
+    <p>Fulano blá blá blá</p>
+    <h4>Produto destaque</h4>
+    <p><a href="{% url armazem:ver_produto 'macbook-pro' %}">Macbook Pro</a></p>
+{% endblock %}
